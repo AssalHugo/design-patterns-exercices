@@ -8,7 +8,8 @@ class MusicBand
     // Promotion du constructeur: https://www.php.net/manual/fr/language.oop5.decon.php#language.oop5.decon.constructor.promotion
     public function __construct(
         private string $name,
-        private array $concerts = []
+        private array $concerts = [],
+        private array $followers = []
     ) {}
 
 
@@ -18,11 +19,21 @@ class MusicBand
             'date' =>  $date,
             'location' => $location
         ];
+
+        foreach($this->followers as $follower) {
+            $follower->notify();
+        }
     }
 
-    public function attach(): void 
-    {}
+    public function attach($user): void
+    {
+        $this->followers[] = $user;
+    }
 
-    public function detach(): void 
-    {}
+    public function detach($user): void
+    {
+        $this->followers = array_filter($this->followers, function($follower) use ($user) {
+            return $follower !== $user;
+        });
+    }
 }

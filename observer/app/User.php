@@ -11,6 +11,11 @@ class User
         private bool $notified = false
     ) {}
 
+    public function notify(): void
+    {
+        $this->notified = true;
+    }
+
 
     public function isNotified(): bool
     {
